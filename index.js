@@ -3,6 +3,8 @@ const github = require('@actions/github');
 const fs = require('fs');
 const aws = require('aws-sdk')
 
+
+
 function getAWSConfiguration() {
 
     return {
@@ -46,4 +48,5 @@ const s3 = new aws.S3({
     region: configuration.region
 });
 
-uploadFile(configuration.bucketS3, file);
+console.log(github.context);
+// uploadFile(configuration.bucketS3, file);
