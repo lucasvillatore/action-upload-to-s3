@@ -3,14 +3,16 @@ const github = require('@actions/github');
 const fs = require('fs');
 const aws = require('aws-sdk')
 
+
+
 function getAWSConfiguration() {
 
     return {
-        'accessKey': core.getInput('aws-access-key'),
-        'secretKey': core.getInput('aws-secret-key'),
-        'bucketS3': core.getInput('bucket-s3'),
-        'region': core.getInput('region'),
-        'path': core.getInput('path'),
+        'accessKey': 'AKIAZZHBJ2OC64CPEZ6K', //core.getInput('aws-access-key'),
+        'secretKey': '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', //core.getInput('aws-secret-key'),
+        'bucketS3': 'lucas-block-bucket-teste',//core.getInput('bucket-s3'),
+        'region': 'us-east-1',//core.getInput('region'),
+        'path': '',//core.getInput('path'),
     }
 }
 
@@ -22,7 +24,7 @@ const uploadFile = (bucket, filename) => {
         const params = {
             Bucket: bucket,
             Key: filename,
-            Body: JSON.stringify(data, null, 2)
+            Body: JSON.stringify(data, null, 2),
         };
 
         s3.upload(params, function (s3Err, data) {
@@ -34,13 +36,17 @@ const uploadFile = (bucket, filename) => {
     });
 };
 const configuration = getAWSConfiguration()
-const file = 'index.js';
+const file = 'project.zip';
 
-console.log('upload to s3');
+const credentials = new aws.Credentials({
+    "accessKeyId": configuration.accessKey ,
+    "secretAccessKey": configuration.secretKey
+})
+
+aws.config.credentials = credentials;
 const s3 = new aws.S3({
-    accessKey: configuration.accessKey,
-    secretKey: configuration.secretKey,
     region: configuration.region
 });
 
-uploadFile(configuration.bucketS3, file);
+console.log(github.context);
+// uploadFile(configuration.bucketS3, file);
