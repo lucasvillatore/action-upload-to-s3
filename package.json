@@ -19,6 +19,7 @@
   "homepage": "https://github.com/lucasvillatore/action-upload-to-s3#readme",
   "dependencies": {
     "@actions/core": "^1.6.0",
-    "@actions/github": "^5.0.0"
+    "@actions/github": "^5.0.0",
+    "aws-sdk": "^2.1075.0"
   }
 }

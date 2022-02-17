@@ -1,13 +1,26 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  aws-access-key: 
+    description: 'AWS access key to upload'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+    default: ''
+  aws-secret-key:
+    description: 'AWS secret key to upload'
+    required: true
+    default: ''
+  bucket-s3:
+    description: 'Name of the bucket s3'
+    required: true
+    default: ''
+  path:
+    description: 'Path do store files to s3'
+    required: false
+    default: ''
+  region:
+    description: 'Path do store files to s3'
+    required: false
+    default: 'us-east-2'
 runs:
   using: 'node16'
   main: 'dist/index.js'

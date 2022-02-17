@@ -1,15 +1,44 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const fs = require('fs');
+const aws = require('aws-sdk')
 
-try {
-    // `who-to-greet` input defined in action metadata file
-    const nameToGreet = core.getInput('who-to-greet');
-    console.log(`Hello ${nameToGreet}!`);
-    const time = (new Date()).toTimeString();
-    core.setOutput("time", time);
-    // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2)
-    console.log(`The event payload: ${payload}`);
-} catch (error) {
-    core.setFailed(error.message);
+function getAWSConfiguration() {
+
+    return {
+        'accessKey': core.getInput('aws-access-key'),
+        'secretKey': core.getInput('aws-secret-key'),
+        'bucketS3': core.getInput('bucket-s3'),
+        'region': core.getInput('region'),
+        'path': core.getInput('path'),
+    }
 }
+
+const uploadFile = (bucket, filename) => {
+    fs.readFile(filename, (err, data) => {
+        if (err) {
+            throw err;
+        }
+        const params = {
+            Bucket: bucket,
+            Key: filename,
+            Body: JSON.stringify(data, null, 2)
+        };
+
+        s3.upload(params, function (s3Err, data) {
+            if (s3Err) {
+                throw s3Err
+            }
+            console.log(`File uploaded successfully at ${data.Location}`)
+        });
+    });
+};
+const configuration = getAWSConfiguration()
+const file = 'index.js';
+
+const s3 = new aws.S3({
+    accessKey: configuration.accessKey,
+    secretKey: configuration.secretKey,
+});
+
+uploadFile(configuration.bucketS3, file);
