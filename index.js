@@ -6,11 +6,11 @@ const aws = require('aws-sdk')
 function getAWSConfiguration() {
 
     return {
-        'accessKey': core.getInput('aws-access-key'),
-        'secretKey': core.getInput('aws-secret-key'),
-        'bucketS3': core.getInput('bucket-s3'),
-        'region': core.getInput('region'),
-        'path': core.getInput('path'),
+        'accessKey': 'AKIAZZHBJ2OC64CPEZ6K', //core.getInput('aws-access-key'),
+        'secretKey': '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', //core.getInput('aws-secret-key'),
+        'bucketS3': 'lucas-block-bucket-teste',//core.getInput('bucket-s3'),
+        'region': 'us-east-1',//core.getInput('region'),
+        'path': '',//core.getInput('path'),
     }
 }
 
@@ -34,7 +34,7 @@ const uploadFile = (bucket, filename) => {
     });
 };
 const configuration = getAWSConfiguration()
-const file = 'index.js';
+const file = 'project.zip';
 
 const credentials = new aws.Credentials({
     "accessKeyId": configuration.accessKey ,

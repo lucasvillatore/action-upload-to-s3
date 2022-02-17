@@ -18,7 +18,7 @@ inputs:
     required: false
     default: ''
   region:
-    description: 'Path do store files to s3'
+    description: 'Bucket region'
     required: false
     default: 'us-east-2'
 runs:
