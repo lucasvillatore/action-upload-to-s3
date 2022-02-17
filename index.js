@@ -22,7 +22,7 @@ const uploadFile = (bucket, filename) => {
         const params = {
             Bucket: bucket,
             Key: filename,
-            Body: JSON.stringify(data, null, 2)
+            Body: JSON.stringify(data, null, 2),
         };
 
         s3.upload(params, function (s3Err, data) {
@@ -36,10 +36,13 @@ const uploadFile = (bucket, filename) => {
 const configuration = getAWSConfiguration()
 const file = 'index.js';
 
-console.log('upload to s3');
+const credentials = new aws.Credentials({
+    "accessKeyId": configuration.accessKey ,
+    "secretAccessKey": configuration.secretKey
+})
+
+aws.config.credentials = credentials;
 const s3 = new aws.S3({
-    accessKey: configuration.accessKey,
-    secretKey: configuration.secretKey,
     region: configuration.region
 });
 
