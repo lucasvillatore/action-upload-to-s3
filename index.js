@@ -3,16 +3,14 @@ const github = require('@actions/github');
 const fs = require('fs');
 const aws = require('aws-sdk')
 
-
-
 function getAWSConfiguration() {
 
     return {
-        'accessKey': 'AKIAZZHBJ2OC64CPEZ6K', //core.getInput('aws-access-key'),
-        'secretKey': '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', //core.getInput('aws-secret-key'),
-        'bucketS3': 'lucas-block-bucket-teste',//core.getInput('bucket-s3'),
-        'region': 'us-east-1',//core.getInput('region'),
-        'path': '',//core.getInput('path'),
+        'accessKey': core.getInput('aws-access-key'),
+        'secretKey': core.getInput('aws-secret-key'),
+        'bucketS3': core.getInput('bucket-s3'),
+        'region': ore.getInput('region'),
+        'path': core.getInput('path'),
     }
 }
 
@@ -48,5 +46,4 @@ const s3 = new aws.S3({
     region: configuration.region
 });
 
-console.log(github.context);
-// uploadFile(configuration.bucketS3, file);
+uploadFile(configuration.bucketS3, file);
