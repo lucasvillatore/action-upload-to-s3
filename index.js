@@ -36,9 +36,11 @@ const uploadFile = (bucket, filename) => {
 const configuration = getAWSConfiguration()
 const file = 'index.js';
 
+console.log('upload to s3');
 const s3 = new aws.S3({
     accessKey: configuration.accessKey,
     secretKey: configuration.secretKey,
+    region: configuration.region
 });
 
 uploadFile(configuration.bucketS3, file);
